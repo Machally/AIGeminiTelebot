@@ -1,0 +1,11 @@
+flask
+flask-login
+pymongo
+python-dotenv
+flask-cors
+python-telegram-bot
+requests
+google-generativeai
+fitz
+PyMuPDF
+pillow
