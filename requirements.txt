@@ -6,6 +6,5 @@ flask-cors
 python-telegram-bot
 requests
 google-generativeai
-fitz
-PyMuPDF
 pillow
+PyMuPDF
