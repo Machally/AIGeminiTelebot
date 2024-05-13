@@ -163,7 +163,7 @@ def post_example():
                         else: 
                             return Response('Failed to send message to Telegram', status=500)
             
-        return Response('ok', status=200)
+    return Response('ok', status=200)
  
 if __name__ == '__main__':
    app.run(debug=True)
