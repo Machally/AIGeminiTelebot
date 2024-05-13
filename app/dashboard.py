@@ -32,7 +32,7 @@ def get_document(pdf_file_path):
 @app.route('/', methods=['GET'])
 def index():
     if request.method == 'GET':
-        return "<h1>Welcome your server is running!</h1>"
+        return "<h1>Gemini Bot Aplication is running!</h1>"
     
 @app.route('/', methods=['POST'])
 def post_example():
@@ -151,6 +151,17 @@ def post_example():
                     except Exception as inst:
                         print(inst)
                         print('Error: Invalid Message')
+                        url = f'https://api.telegram.org/bot{bot_token}/sendMessage?parse_mode=markdown' # Calling the telegram API to reply the message
+            
+                        payload = {
+                            'chat_id': chat_id,
+                            'text': 'Algo inesperado ocorreu... *Tente novamente*.'
+                        }
+                        r = requests.post(url, json=payload)
+                        if r.status_code == 200:
+                            return Response('ok', status=200)
+                        else: 
+                            return Response('Failed to send message to Telegram', status=500)
             
         return Response('ok', status=200)
  
