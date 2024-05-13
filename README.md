@@ -30,7 +30,7 @@ python -m venv venv
 ```
 e em seguida ative o venv:
 ```shell
-source venv/bin/activate
+./venv/Scripts/activate
 ```
 3. Instale as dependências do projeto
 ```shell

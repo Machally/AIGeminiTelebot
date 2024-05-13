@@ -8,3 +8,4 @@ requests
 google-generativeai
 pillow
 PyMuPDF
+pillow
