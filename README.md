@@ -75,17 +75,17 @@ GOOGLE_API_KEY=<Google_api_key>
 6. Abra a conversa com o Bot clicando no link fornecido pelo @BotFather t.me/<bot_user_name> e inicie a conversa clicando em 'start'
 
 ## Inicialização da aplicação ngrok 
-em um terminal execute o comando:
+em um outro terminal execute o comando:
 ```shell
 ngrok http 5000
 ```
-Neste terminal será apresentado uma url da aplicação ngrok. Copie a url e substitua no comando a seguir em <ngrok_url> e substitua <bot_token> pelo respectivo token salvo no arquivo .env:
+Neste terminal será apresentado uma url da aplicação ngrok. Copie a url e substitua no comando a seguir em <ngrok_url> e substitua <bot_token> pelo respectivo token do bot Telegram salvo no arquivo .env:
 ```shell
 curl -X POST "https://api.telegram.org/bot<bot_token>/setWebhook?url=<ngrok_url>"
 ```
 Caso não seja reconhecido o comando curl no windows, veja como instalar o comando [aqui](https://ramonduraes.net/2021/04/25/como-instalar-o-curl/), ou execute a url completa em uma janela do navegador web.
 
-## Executar o a aplicação com o Flask
+## Executar a aplicação com o Flask
 em um terminal com o venv habilitado, execute o comando:
 
 ```shell
