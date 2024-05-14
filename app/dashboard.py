@@ -149,19 +149,48 @@ def post_example():
                             return Response('Failed to send message to Telegram', status=500)
                             
                     except Exception as inst:
-                        print(inst)
-                        print('Error: Invalid Message')
-                        url = f'https://api.telegram.org/bot{bot_token}/sendMessage?parse_mode=markdown' # Calling the telegram API to reply the message
+                        try:
+                            file_id = msg['message']['voice']['file_id']
+                            text = 'escute o audio e utilize-o como um prompt'
+                            url = f"https://api.telegram.org/bot{bot_token}/getFile?file_id={file_id}"
+                            r = requests.post(url, json=[])
+                            data = r.json()
+                            file_path = data['result']['file_path']
+                            url = f"https://api.telegram.org/file/bot{bot_token}/{file_path}" 
+                            response = requests.get(url)
+                            #print(file_path)
+                            if response.status_code == 200:
+                                with open('./' + file_path, 'wb') as file:
+                                    file.write(response.content) 
+                            audio_file = genai.upload_file('./' + file_path)          
+                            response = chat.send_message([text, audio_file])
+                            url = f'https://api.telegram.org/bot{bot_token}/sendMessage' # Calling the telegram API to reply the message
             
-                        payload = {
-                            'chat_id': chat_id,
-                            'text': 'Algo inesperado ocorreu... *Tente novamente*.'
-                        }
-                        r = requests.post(url, json=payload)
-                        if r.status_code == 200:
-                            return Response('ok', status=200)
-                        else: 
-                            return Response('Failed to send message to Telegram', status=500)
+                            payload = {
+                                'chat_id': chat_id,
+                                'text': response.text
+                            }
+                            r = requests.post(url, json=payload)
+                            os.remove(file_path)
+                            if r.status_code == 200:
+                                return Response('ok', status=200)
+                            else: 
+                                return Response('Failed to send message to Telegram', status=500)
+                            
+                        except Exception as inst:
+                            print(inst)
+                            print('Error: Invalid Message')
+                            url = f'https://api.telegram.org/bot{bot_token}/sendMessage?parse_mode=markdown' # Calling the telegram API to reply the message
+                
+                            payload = {
+                                'chat_id': chat_id,
+                                'text': 'Algo inesperado ocorreu... *Tente novamente*.'
+                            }
+                            r = requests.post(url, json=payload)
+                            if r.status_code == 200:
+                                return Response('ok', status=200)
+                            else: 
+                                return Response('Failed to send message to Telegram', status=500)
             
     return Response('ok', status=200)
  
